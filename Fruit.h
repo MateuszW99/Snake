@@ -1,22 +1,11 @@
-#include <QGraphicsRectItem>
-#include <QTimer>
+#include <QGraphicsItem>
 
-class Fruit : /*public QObject,*/ public QGraphicsRectItem
+class Fruit : public QGraphicsItem
 {
-    //Q_OBJECT
-
 public:
-    Fruit();
-    ~Fruit();
+    Fruit(qreal, qreal);
 
-public slots:
-
-    void Spawn();
-
-private:
-    //QTimer* timer;
-    int RandomWidth() const;
-    int RandomHeight() const;
-
-
+    QPainterPath shape() const;
+    QRectF boundingRect() const; // Reactangle bouding the shape of food
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *);
 };

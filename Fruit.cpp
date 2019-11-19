@@ -1,35 +1,34 @@
 #include "Fruit.h"
 #include <QGraphicsView>
 #include "Constants.h"
+#include <random>
+#include <QDebug>
 
-Fruit::Fruit()
+Fruit::Fruit(qreal x, qreal y)
 {
-    //timer = new QTimer();
-    //connect(timer, SIGNAL(timeout()), this, SLOT(Spawn()));
-    //timer->start(Data::FruitSpawnTime);
-    //////////
-    //setRect(RandomWidth(), RandomHeight(), 20, 20); // Set the fruit to a rand point and its size to 10x10
-    //setBrush(QColor(240, 20, 20, 150));
+    setPos(x, y);
 }
 
-Fruit::~Fruit()
+QPainterPath Fruit::shape() const
 {
-    //delete timer;
+    QPainterPath p;
+    p.addEllipse(QPointF(Data::FruitSize / 2, Data::FruitSize / 2), Data::FruitSize, Data::FruitSize);
+    return p;
 }
 
-int Fruit::RandomWidth() const
+QRectF Fruit::boundingRect() const
 {
-    return rand()%(Data::width);
+    return QRectF(-Data::FruitSize / 2, -Data::FruitSize / 2, Data::FruitSize * 2, Data::FruitSize * 2 );
 }
 
-int Fruit::RandomHeight() const
+void Fruit::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)
 {
-    return rand()%(Data::height);
+    painter->save();
+
+    painter->setRenderHint(QPainter::Antialiasing);
+    painter->fillPath(shape(), Qt::red);
+
+    painter->restore();
 }
 
 
-void Fruit::Spawn()
-{
-    setRect(RandomWidth(), RandomHeight(), 20, 20); // Set the fruit to a rand point and its size to 10x10
-    setBrush(QColor(240, 20, 20, 150));
-}
