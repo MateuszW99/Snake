@@ -1,4 +1,22 @@
-#ifndef FRUIT_H
-#define FRUIT_H
+#include <QGraphicsRectItem>
+#include <QTimer>
 
-#endif // FRUIT_H
+class Fruit : /*public QObject,*/ public QGraphicsRectItem
+{
+    //Q_OBJECT
+
+public:
+    Fruit();
+    ~Fruit();
+
+public slots:
+
+    void Spawn();
+
+private:
+    //QTimer* timer;
+    int RandomWidth() const;
+    int RandomHeight() const;
+
+
+};
