@@ -9,5 +9,6 @@ namespace Data {
     constexpr int FruitSpawnTime = 2500;
     constexpr int SnakeLatencySpeed = 50;
     constexpr int MaxFruitNumber = 3;
-    constexpr double Epsilon = 0.00001;
+    constexpr int FruitSize = 10;
+    constexpr qreal FruitRadius = 3.0;
 }

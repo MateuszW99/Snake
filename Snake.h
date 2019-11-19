@@ -34,11 +34,7 @@ public:
     int GetXDirection() const { return xDirection; }
     int GetYDirection() const { return yDirection; }
 
-public slots:
-    //void Move();
-
 private:
-    //QTimer* timer;
     SnakePart* head;
 
     int xDirection;
@@ -48,8 +44,5 @@ private:
     void MoveRight();
     void MoveUp();
     void MoveDown();
-
-    //void CheckCollision();
-    //bool ComparePositions(const double, const double, const double, const double) const;
 };
 

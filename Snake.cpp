@@ -32,25 +32,25 @@ void Snake::keyPressEvent(QKeyEvent* keyEvent)
     switch (keyEvent->key()) {
     case Qt::Key_Left:
     {
-        qDebug() << "Left";
+        //qDebug() << "Left";
         MoveLeft();
         break;
     }
     case Qt::Key_Right:
     {
-        qDebug() << "Right";
+        //qDebug() << "Right";
         MoveRight();
         break;
     }
     case Qt::Key_Up:
     {
-        qDebug() << "Up";
+        //qDebug() << "Up";
         MoveUp();
         break;
     }
      case Qt::Key_Down:
     {
-        qDebug() << "Down";
+        //qDebug() << "Down";
         MoveDown();
         break;
     }
