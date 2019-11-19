@@ -1,10 +1,10 @@
 #include "Snake.h"
 #include <QDebug>
 #include <QGraphicsScene>
-#include "IControl.h"
 #include <QTimer>
 #include "Constants.h"
-
+#include "Fruit.h"
+#include <QVector>
 using namespace Data;
 
 SnakePart::~SnakePart() {}
@@ -12,9 +12,6 @@ SnakePart::~SnakePart() {}
 Snake::Snake() : xDirection{xVelocity}, yDirection{0}
 {
     head = new SnakePart();
-    timer = new QTimer();
-    connect(timer, SIGNAL(timeout()), this, SLOT(Move()));
-    timer->start(20);
 }
 
 Snake::~Snake()
@@ -28,29 +25,6 @@ void Snake::Setup()
     setBrush(QColor(0, 0, 204, 150));
     setFlag(QGraphicsItem::ItemIsFocusable);
     setFocus();
-}
-
-bool Snake::WallHit()
-{
-    //qDebug() << x() << ", " << y();
-    if(x() > width/2|| x() < -width/2|| y() > height/2 || y() < -height/2)
-    {
-        qDebug() << "Wall hit";
-        return true;
-    }
-    return false;
-}
-
-void Snake::Move()
-{
-    setPos(x() + xDirection, y() + yDirection);
-    setFocus();
-    qDebug() << x() << ", " << y();
-    if(WallHit())
-    {
-        qDebug() << "Timer stopped";
-        timer->stop();
-    }  
 }
 
 void Snake::keyPressEvent(QKeyEvent* keyEvent)

@@ -1,13 +1,9 @@
 #pragma once
-
-#include <QImage>
-#include <vector>
-#include <QPoint>
 #include <QGraphicsRectItem>
 #include <QObject>
 #include <QKeyEvent>
 #include "Constants.h"
-
+#include <QVector>
 
 
 struct SnakePart : public QGraphicsRectItem
@@ -31,24 +27,29 @@ public:
     ~Snake();
 
     void Setup();
-
+    void EatFruit();
     void AddTail();
     bool WallHit();
 
+    int GetXDirection() const { return xDirection; }
+    int GetYDirection() const { return yDirection; }
+
 public slots:
-    void Move();
+    //void Move();
 
 private:
-    //QGraphicsScene* sceneWalls;
-    QTimer* timer;
+    //QTimer* timer;
     SnakePart* head;
+
     int xDirection;
     int yDirection;
     void keyPressEvent(QKeyEvent*);
-
     void MoveLeft();
     void MoveRight();
     void MoveUp();
     void MoveDown();
+
+    //void CheckCollision();
+    //bool ComparePositions(const double, const double, const double, const double) const;
 };
 
