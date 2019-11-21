@@ -15,15 +15,6 @@ Snake::Snake() : xDirection{xVelocity}, yDirection{0}
     setFlag(QGraphicsItem::ItemIsFocusable);
 }
 
-/*
-void Snake::Setup()
-{
-    setRect(, 20, 20); // Set the starting point to the middle of the window and rect size to 20x20
-    setBrush(QColor(0, 0, 204, 150));
-    setFlag(QGraphicsItem::ItemIsFocusable);
-    setFocus();
-}*/
-
 QPainterPath Snake::shape() const
 {
     QPainterPath p;
@@ -41,7 +32,7 @@ void Snake::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *
 {
     painter->save();
     painter->setRenderHint(QPainter::Antialiasing);
-    painter->fillPath(shape(), Qt::red);
+    painter->fillPath(shape(), QColor(20, 155, 55));
     painter->restore();
 }
 
@@ -90,10 +81,7 @@ void Snake::CheckCollision()
     QList<QGraphicsItem*> collision = collidingItems();
     for(auto item : collision)
     {
-        if(typeid(item) == typeid (Fruit) )
-        {
-            qDebug() << "Fruit met!";
-        }
+        //snake->eat()
     }
 
 }
