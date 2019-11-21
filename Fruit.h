@@ -6,6 +6,6 @@ public:
     Fruit(qreal, qreal);
 
     QPainterPath shape() const;
-    QRectF boundingRect() const; // Reactangle bouding the shape of food
+    QRectF boundingRect() const; // Rectangle bouding the shape of food
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *);
 };

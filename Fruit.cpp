@@ -12,13 +12,13 @@ Fruit::Fruit(qreal x, qreal y)
 QPainterPath Fruit::shape() const
 {
     QPainterPath p;
-    p.addEllipse(QPointF(Data::FruitSize / 2, Data::FruitSize / 2), Data::FruitSize, Data::FruitSize);
+    p.addEllipse(QPointF(Data::fruitSize / 2, Data::fruitSize / 2), Data::fruitSize, Data::fruitSize);
     return p;
 }
 
 QRectF Fruit::boundingRect() const
 {
-    return QRectF(-Data::FruitSize / 2, -Data::FruitSize / 2, Data::FruitSize * 2, Data::FruitSize * 2 );
+    return QRectF(-Data::fruitSize / 2, -Data::fruitSize / 2, Data::fruitSize * 2, Data::fruitSize * 2 );
 }
 
 void Fruit::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)
