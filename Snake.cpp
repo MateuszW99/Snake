@@ -27,14 +27,14 @@ void Snake::Setup()
 QPainterPath Snake::shape() const
 {
     QPainterPath p;
-    //p.setFillRule(Qt::WindingFill);
-    p.addEllipse(QPointF(Data::snakeSize / 2, Data::snakeSize / 2), Data::snakeSize, Data::snakeSize);
+    p.setFillRule(Qt::WindingFill);
+    p.addEllipse(QPointF(0, 0), Data::snakeSize, Data::snakeSize);
     return p;
 }
 
 QRectF Snake::boundingRect() const
 {
-    return QRectF(-Data::snakeRadius / 2, -Data::snakeRadius / 2, Data::snakeRadius * 2, Data::snakeRadius * 2 );
+    return QRectF(QPointF(0 - Data::snakeSize, 0 - Data::snakeSize), QPointF(0 + Data::snakeSize, 0 + Data::snakeSize));
 }
 
 void Snake::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)
@@ -50,25 +50,25 @@ void Snake::keyPressEvent(QKeyEvent* keyEvent)
     switch (keyEvent->key()) {
     case Qt::Key_Left:
     {
-        qDebug() << "Left";
+        //qDebug() << "Left";
         MoveLeft();
         break;
     }
     case Qt::Key_Right:
     {
-        qDebug() << "Right";
+        //qDebug() << "Right";
         MoveRight();
         break;
     }
     case Qt::Key_Up:
     {
-        qDebug() << "Up";
+        //qDebug() << "Up";
         MoveUp();
         break;
     }
      case Qt::Key_Down:
     {
-        qDebug() << "Down";
+        //qDebug() << "Down";
         MoveDown();
         break;
     }
