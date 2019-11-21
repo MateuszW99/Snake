@@ -7,6 +7,7 @@
 #include "Snake.h"
 #include "Fruit.h"
 #include <QTimer>
+#include <QGraphicsItem>
 
 class Board : public QGraphicsView
 {

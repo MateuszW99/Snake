@@ -3,6 +3,8 @@
 #include <QtDebug>
 #include <cmath>
 #include <random>
+
+
 Board::Board()
 {
     snake = new Snake();
@@ -17,11 +19,10 @@ Board::Board()
     setSceneRect(0, 0, Data::width, Data::height);
 
     scene->addItem(snake);
-    snake->Setup();
-
+    snake->setPos(200, 200);
     //scene->addItem(fruit);
     //fruit->Spawn();
-
+    snake->setFocus();
     connect(spawnTimer, SIGNAL(timeout()), this, SLOT(SpawnFruit()));
     spawnTimer->start(Data::FruitSpawnTime);
 
@@ -34,14 +35,14 @@ Board::Board()
 
 void Board::SpawnFruit()
 {
-    if(Fruits.count() >= Data::MaxFruitNumber)
+    if(Fruits.count() >= Data::maxFruitNumber)
     {
         return;
     }
 
 
-    int x = qrand()% (Data::width - 10) + 10;
-    int y = qrand()% (Data::height - 10) + 10;
+    int x = qrand() % (Data::width - 10) + 10;
+    int y = qrand() % (Data::height - 10) + 10;
     Fruit* fruit = new Fruit(x, y);
     scene->addItem(fruit);
 }
@@ -49,49 +50,20 @@ void Board::SpawnFruit()
 
 void Board::MoveSnake()
 {
-    if(WallHit())
+    if(snake->WallHit())
     {
         qDebug() << "Timer stopped";
         snakeTimer->stop();
     }
 
-    CheckCollision();
-
+    snake->CheckCollision();
     snake->setPos(snake->x() + snake->GetXDirection(), snake->y() + snake->GetYDirection());
-    //qDebug() << snake->pos();
+    qDebug() << snake->pos();
     snake->setFocus();
 }
 
-void Board::CheckCollision()
-{
-    for(auto i = 0; i < Fruits.count(); ++i)
-    {
-        //qDebug() << Fruits[i]->pos();
-        /*if(ComparePositions(Fruits[i]->x(), Fruits[i]->y(), snake->x(), snake->y()))
-        {
-            qDebug() << "Fruit met";
-        }*/
-        if(snake->pos() == Fruits[i]->pos())
-        {
-            qDebug() << "Fruit met";
-        }
-    }
-}
 
-bool Board::ComparePositions(const double fX, const double fY, const double sX, const double sY) const
-{
-   return true;
-}
 
-bool Board::WallHit()
-{
-    if(snake->x() > Data::width/2|| x() < -Data::width/2|| y() > Data::height/2 || y() < -Data::height/2)
-    {
-        qDebug() << "Wall hit";
-        return true;
-    }
-    return false;
-}
 
 
 
