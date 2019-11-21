@@ -19,7 +19,7 @@ Board::Board()
     setSceneRect(0, 0, Data::width, Data::height);
 
     scene->addItem(snake);
-    snake->setPos(200, 200);
+    snake->setPos(Data::width / 2, Data::height / 2);
     //scene->addItem(fruit);
     //fruit->Spawn();
     snake->setFocus();
