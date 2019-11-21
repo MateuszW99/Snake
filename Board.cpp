@@ -45,6 +45,7 @@ void Board::SpawnFruit()
     Fruit* fruit = new Fruit(x, y);
     scene->addItem(fruit);
 }
+// TODO: food eating
 
 void Board::MoveSnake()
 {
