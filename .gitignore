@@ -1,3 +1,4 @@
 // QT Creator files
 *.pro
+*.pro.*
 *.ui
