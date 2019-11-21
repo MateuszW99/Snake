@@ -8,6 +8,7 @@
 #include "Fruit.h"
 #include <QTimer>
 #include <QGraphicsItem>
+#include "Controller.h"
 
 class Board : public QGraphicsView
 {
@@ -17,25 +18,13 @@ public:
     ~Board()
     {
         delete scene;
-        delete snake;
-        delete spawnTimer;
-        delete snakeTimer;
-        // delete fruits
     }
-
-public slots:
-    void SpawnFruit();
-    void MoveSnake();
 
 private:
     QGraphicsScene* scene;
-    Snake* snake;
-    QTimer* spawnTimer;
-    QTimer* snakeTimer;
+
     QVector<Fruit*> Fruits;
 
-    bool WallHit();
-    void CheckCollision();
-    bool ComparePositions(const double, const double, const double, const double) const;
+    Controller* controller;
 
 };
