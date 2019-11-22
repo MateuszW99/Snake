@@ -3,7 +3,9 @@
 #include "Fruit.h"
 #include <QDebug>
 
-Controller::Controller(QGraphicsScene* scene) : gameScene { scene }, snake { new Snake() }
+int Controller::fruitsNumber = 0;
+
+Controller::Controller(QGraphicsScene* scene) : gameScene { scene }, snake { new Snake(scene) }
 {
     scene->addItem(snake);
     snake->setFocus();
@@ -43,16 +45,15 @@ void Controller::MoveSnake()
 
 void Controller::SpawnFruit()
 {
-    if(Fruits.count() >= Data::maxFruitNumber)
+    if(fruitsNumber >= Data::maxFruitNumber)
     {
         return;
     }
-
 
     int x = qrand() % (Data::width - 10) + 10;
     int y = qrand() % (Data::height - 10) + 10;
     Fruit* fruit = new Fruit(x, y);
     gameScene->addItem(fruit);
-    Fruits.push_back(fruit);
+    fruitsNumber++;
 }
 

@@ -3,7 +3,6 @@
 #include <QTimer>
 #include <QGraphicsScene>
 #include <QKeyEvent>
-#include <QVector>
 #include "Snake.h"
 #include "Fruit.h"
 
@@ -14,6 +13,8 @@ public:
     Controller(QGraphicsScene*);
     ~Controller();
 
+    static int fruitsNumber;
+
 public slots:
     void SpawnFruit();
     void MoveSnake();
@@ -23,5 +24,4 @@ private:
     Snake* snake;
     QTimer* snakeTimer;
     QTimer* fruitTimer;
-    QVector<Fruit*> Fruits;
 };

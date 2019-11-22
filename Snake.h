@@ -8,7 +8,7 @@
 class Snake : public QGraphicsItem
 {
 public:
-    Snake();
+    Snake(QGraphicsScene*);
 
     QPainterPath shape() const;
     QRectF boundingRect() const; // Rectangle bouding the shape of food
@@ -30,6 +30,7 @@ public:
     void MoveDown();
 
 private:
+    QGraphicsScene* scene;
     int xDirection;
     int yDirection;
 

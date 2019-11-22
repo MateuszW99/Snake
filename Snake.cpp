@@ -6,11 +6,12 @@
 #include "Fruit.h"
 #include <QVector>
 #include <QList>
+#include "Controller.h"
 
 using namespace Data;
 
 
-Snake::Snake() : xDirection{xVelocity}, yDirection{0}
+Snake::Snake(QGraphicsScene* gameScene) : xDirection{xVelocity}, yDirection{0}, scene{ gameScene }
 {
     //setFocus();
     setFlag(QGraphicsItem::ItemIsFocusable);
@@ -82,9 +83,10 @@ void Snake::CheckCollision()
     QList<QGraphicsItem*> collision = collidingItems();
     for(auto item : collision)
     {
+        scene->removeItem(item);
+        Controller::fruitsNumber--;
         //snake->eat()
     }
-
 }
 
 void Snake::MoveLeft()
