@@ -22,9 +22,5 @@ public:
 
 private:
     QGraphicsScene* scene;
-
-    QVector<Fruit*> Fruits;
-
     Controller* controller;
-
 };
