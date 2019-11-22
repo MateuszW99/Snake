@@ -12,11 +12,11 @@ Controller::Controller(QGraphicsScene* scene) : gameScene { scene }, snake { new
     snake->setPos(Data::width / 2, Data::height / 2);
 
     fruitTimer = new QTimer();
-    connect(fruitTimer, SIGNAL(timeout()), this, SLOT(SpawnFruit()));
+    connect(fruitTimer, SIGNAL(timeout()), this, SLOT(spawnFruit()));
     fruitTimer->start(Data::FruitSpawnTime);
 
     snakeTimer = new QTimer;
-    connect(snakeTimer, SIGNAL(timeout()), this, SLOT(MoveSnake()));
+    connect(snakeTimer, SIGNAL(timeout()), this, SLOT(moveSnake()));
     snakeTimer->start(Data::SnakeLatencySpeed);
 }
 
@@ -27,33 +27,53 @@ Controller::~Controller()
     delete fruitTimer;
 }
 
-void Controller::MoveSnake()
+void Controller::moveSnake()
 {
-    if(snake->WallHit())
+    if(checkWallCollision()) // hitting a wall means losing the game
     {
-        //qDebug() << "Timer stopped";
         snakeTimer->stop();
         return;
     }
 
-    snake->CheckCollision();
-    snake->setPos(snake->x() + snake->GetXDirection(), snake->y() + snake->GetYDirection());
+    checkItemCollision();
+
+    snake->setPos(snake->x() + snake->getXDirection(), snake->y() + snake->getYDirection());
     //qDebug() << snake->pos();
     snake->setFocus();
 }
 
-
-void Controller::SpawnFruit()
+void Controller::spawnFruit()
 {
-    if(fruitsNumber >= Data::maxFruitNumber)
+    if(checkFruitsNumber()) // If there are more fruits than Data::maxFruitNumber, don't add a new one
     {
         return;
     }
-
-    int x = qrand() % (Data::width - 10) + 10;
-    int y = qrand() % (Data::height - 10) + 10;
-    Fruit* fruit = new Fruit(x, y);
-    gameScene->addItem(fruit);
+    gameScene->addItem(new Fruit(qrand() % (Data::width - 10) + 10, qrand() % (Data::height - 10) + 10));
     fruitsNumber++;
 }
+
+bool Controller::checkWallCollision() const
+{
+    if(snake->wallHit())
+    {
+        return true;
+    }
+    return false;
+}
+
+void Controller::checkItemCollision() const
+{
+    snake->checkCollision();
+}
+
+bool Controller::checkFruitsNumber() const
+{
+    if(fruitsNumber >= Data::maxFruitNumber)
+    {
+        return true;
+    }
+    return false;
+}
+
+
 

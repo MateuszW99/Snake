@@ -1,17 +1,15 @@
-#include "Snake.h"
 #include <QDebug>
 #include <QGraphicsScene>
 #include <QTimer>
-#include "Constants.h"
-#include "Fruit.h"
-#include <QVector>
 #include <QList>
+#include "Snake.h"
+#include "Fruit.h"
 #include "Controller.h"
 
 using namespace Data;
 
 
-Snake::Snake(QGraphicsScene* gameScene) : xDirection{xVelocity}, yDirection{0}, scene{ gameScene }
+Snake::Snake(QGraphicsScene* gameScene) : scene{ gameScene }, xDirection{ xVelocity }, yDirection{ 0 }
 {
     //setFocus();
     setFlag(QGraphicsItem::ItemIsFocusable);
@@ -44,31 +42,31 @@ void Snake::keyPressEvent(QKeyEvent* keyEvent)
     case Qt::Key_Left:
     {
         //qDebug() << "Left";
-        MoveLeft();
+        moveLeft();
         break;
     }
     case Qt::Key_Right:
     {
         //qDebug() << "Right";
-        MoveRight();
+        moveRight();
         break;
     }
     case Qt::Key_Up:
     {
         //qDebug() << "Up";
-        MoveUp();
+        moveUp();
         break;
     }
      case Qt::Key_Down:
     {
         //qDebug() << "Down";
-        MoveDown();
+        moveDown();
         break;
     }
     }
 }
 
-bool Snake::WallHit()
+bool Snake::wallHit()
 {
     if(x() > Data::width|| x() < -Data::width|| y() > Data::height || y() < -Data::height)
     {
@@ -78,7 +76,7 @@ bool Snake::WallHit()
     return false;
 }
 
-void Snake::CheckCollision()
+void Snake::checkCollision()
 {
     QList<QGraphicsItem*> collision = collidingItems();
     for(auto item : collision)
@@ -89,25 +87,25 @@ void Snake::CheckCollision()
     }
 }
 
-void Snake::MoveLeft()
+void Snake::moveLeft()
 {
     xDirection = -1 * xVelocity;
     yDirection = 0;
 }
 
-void Snake::MoveRight()
+void Snake::moveRight()
 {
     xDirection = xVelocity;
     yDirection = 0;
 }
 
-void Snake::MoveUp()
+void Snake::moveUp()
 {
     xDirection = 0;
     yDirection = -1 * yVelocity;
 }
 
-void Snake::MoveDown()
+void Snake::moveDown()
 {
     xDirection = 0;
     yDirection = yVelocity;

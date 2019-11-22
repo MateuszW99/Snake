@@ -13,15 +13,19 @@ public:
     Controller(QGraphicsScene*);
     ~Controller();
 
-    static int fruitsNumber;
+    static int fruitsNumber; // Holds a value of current number of fruits on the board
 
 public slots:
-    void SpawnFruit();
-    void MoveSnake();
+    void spawnFruit();
+    void moveSnake();
 
 private:
-    QGraphicsScene* gameScene;
-    Snake* snake;
-    QTimer* snakeTimer;
-    QTimer* fruitTimer;
+    QGraphicsScene* gameScene = nullptr;
+    Snake* snake = nullptr;
+    QTimer* snakeTimer = nullptr;
+    QTimer* fruitTimer = nullptr;
+
+    bool checkWallCollision() const;  // Returns true whenever snake hits a wall
+    void checkItemCollision() const; // Gather items which snake's colliding with
+    bool checkFruitsNumber() const; // Returns true if there are more than Data::maxFruitNumber on the board
 };

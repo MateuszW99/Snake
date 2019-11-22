@@ -8,7 +8,7 @@ public:
 
     //std::string name() const { return "Fruit"; }
 
-    QPainterPath shape() const;
-    QRectF boundingRect() const; // Rectangle bouding the shape of food
+    QPainterPath shape() const; // Set the shape of food to circle
+    QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *);
 };

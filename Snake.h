@@ -2,7 +2,6 @@
 #include <QGraphicsItem>
 #include <QKeyEvent>
 #include "Constants.h"
-#include <QVector>
 #include <QPainter>
 
 class Snake : public QGraphicsItem
@@ -10,32 +9,30 @@ class Snake : public QGraphicsItem
 public:
     Snake(QGraphicsScene*);
 
-    QPainterPath shape() const;
-    QRectF boundingRect() const; // Rectangle bouding the shape of food
+    QPainterPath shape() const; // Set the shape of snake to circle
+    QRectF boundingRect() const; // Set a rectangle to be the bouding shape of snake
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *);
 
-    void EatFruit();
-    void AddTail();
+    void eatFruit();
+    void addTail();
 
-    bool WallHit();
-    void CheckCollision();
+    bool wallHit(); // Determine if snake hit a wall
+    void checkCollision(); // Collect items snake's colliding with
 
-    int GetXDirection() const { return xDirection; }
-    int GetYDirection() const { return yDirection; }
+    int getXDirection() const { return xDirection; }
+    int getYDirection() const { return yDirection; }
 
 
-    void MoveLeft();
-    void MoveRight();
-    void MoveUp();
-    void MoveDown();
+    void moveLeft(); // Set xDirection to -xDirection and yDirection to 0
+    void moveRight(); // Set xDireciton to +xDirection and yDirection to 0
+    void moveUp(); // Set yDirection to -yDirection and xDirection to 0
+    void moveDown(); // Set yDirection to +yDirection and xDirection to 0
 
 private:
-    QGraphicsScene* scene;
+    QGraphicsScene* scene = nullptr;
     int xDirection;
     int yDirection;
 
     void keyPressEvent(QKeyEvent*);
-
-
 };
 
