@@ -23,16 +23,18 @@ public:
     int GetXDirection() const { return xDirection; }
     int GetYDirection() const { return yDirection; }
 
+
+    void MoveLeft();
+    void MoveRight();
+    void MoveUp();
+    void MoveDown();
+
 private:
     int xDirection;
     int yDirection;
 
     void keyPressEvent(QKeyEvent*);
 
-    void MoveLeft();
-    void MoveRight();
-    void MoveUp();
-    void MoveDown();
 
 };
 

@@ -12,6 +12,7 @@ using namespace Data;
 
 Snake::Snake() : xDirection{xVelocity}, yDirection{0}
 {
+    //setFocus();
     setFlag(QGraphicsItem::ItemIsFocusable);
 }
 
