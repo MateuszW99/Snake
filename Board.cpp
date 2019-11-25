@@ -4,7 +4,7 @@
 #include <cmath>
 #include <random>
 
-Board::Board()
+Board::Board(QObject* parent)
 {
     scene = new QGraphicsScene();
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
@@ -12,7 +12,7 @@ Board::Board()
     setScene(scene);
     setFixedSize(Data::width, Data::height);
     setSceneRect(0, 0, Data::width, Data::height);
-    controller = new Controller{scene};
+    controller = new Controller{scene, parent};
 }
 
 
