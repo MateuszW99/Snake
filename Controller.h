@@ -10,7 +10,7 @@ class Controller : public QObject
 {
     Q_OBJECT
 public:
-    Controller(QGraphicsScene*);
+    Controller(QGraphicsScene*, QObject* parent);
     ~Controller();
 
     static int fruitsNumber; // Holds a value of current number of fruits on the board
@@ -28,4 +28,7 @@ private:
     bool checkWallCollision() const;  // Returns true whenever snake hits a wall
     void checkItemCollision() const; // Gather items which snake's colliding with
     bool checkFruitsNumber() const; // Returns true if there are more than Data::maxFruitNumber on the board
+
+    void keyPressEvent(QKeyEvent*);
+    bool eventFilter(QObject *watched, QEvent *event) override;
 };
