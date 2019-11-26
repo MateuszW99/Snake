@@ -31,6 +31,7 @@ public:
     void moveUp(); // Set yDirection to -yDirection and xDirection to 0
     void moveDown(); // Set yDirection to +yDirection and xDirection to 0
 
+    bool intersects() const; // Return true if snake eats itself
 private:
     QPointF head;
     QVector<QPointF> tail; // Store all the exisiting points of snake's tail
@@ -43,5 +44,6 @@ private:
     void updateHead();
     void updateTail();
 
+    QPainterPath painter;
 };
 

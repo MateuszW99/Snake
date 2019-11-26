@@ -29,7 +29,7 @@ Controller::~Controller()
 
 void Controller::moveSnake()
 {
-    if(checkWallCollision()) // hitting a wall means losing the game
+    if(checkWallCollision() || checkSnakeCollision()) // hitting a wall means losing the game
     {
         snakeTimer->stop();
         return;
@@ -56,11 +56,12 @@ void Controller::spawnFruit()
 
 bool Controller::checkWallCollision() const
 {
-    if(snake->wallHit())
-    {
-        return true;
-    }
-    return false;
+    return snake->wallHit() ? true : false;
+}
+
+bool Controller::checkSnakeCollision() const
+{
+    return snake->intersects() ? true : false;
 }
 
 void Controller::checkItemCollision() const
@@ -70,11 +71,7 @@ void Controller::checkItemCollision() const
 
 bool Controller::checkFruitsNumber() const
 {
-    if(fruitsNumber >= Data::maxFruitNumber)
-    {
-        return true;
-    }
-    return false;
+    return fruitsNumber >= Data::maxFruitNumber ? true : false;
 }
 
 bool Controller::eventFilter(QObject *watched, QEvent *event)

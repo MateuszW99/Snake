@@ -10,7 +10,7 @@
 Snake::Snake(QGraphicsScene* gameScene)
     : head{Data::width / 2, Data::height / 2}, scene{ gameScene },
       xDirection{ Data::xVelocity }, yDirection{ 0 },
-      toGrow { 7 }
+      toGrow { 20 }
 {
 
 }
@@ -27,6 +27,7 @@ QPainterPath Snake::shape() const
         QPointF node = mapFromScene(point);
         painterPath.addEllipse(QPointF(node.x(), node.y()), Data::snakeSize * 0.9, Data::snakeSize * 0.9); // Snake nodes are set to be smaller than the head
     }
+
     return painterPath;
 }
 
@@ -76,7 +77,6 @@ void Snake::eatFruit()
 
 bool Snake::wallHit()
 {
-    qDebug() << head;
     if(head.x() >= Data::width || head.x() <= 0 || head.y() >= Data::height || head.y() <= 0)
     {
         qDebug() << "Wall hit";
@@ -97,10 +97,8 @@ void Snake::checkCollision()
             Controller::fruitsNumber--;
         }
     }
-    if(tail.contains(head))
-    {
-        //qDebug() << "head";
-    }
+
+
 
 }
 
@@ -132,6 +130,11 @@ void Snake::moveDown()
     updateHead();
 }
 
+bool Snake::intersects() const
+{
+    return tail.contains(head) ? true : false;
+}
+
 void Snake::updateHead()
 {
     head.setX(head.x() + xDirection);
@@ -142,8 +145,6 @@ void Snake::updateTail()
 {
     if(toGrow > 0)
     {
-        QPointF tailNode = QPointF{x() + xDirection, y() + yDirection};
-        tail.push_back(tailNode);
         toGrow--;
     }
     else
@@ -151,8 +152,8 @@ void Snake::updateTail()
         if(!tail.isEmpty())
         {
             tail.removeFirst();
-            tail.push_back(QPointF{x() + xDirection, y() + yDirection});
         }
     }
 
+    tail.push_back(QPointF{x(), y()});
 }
