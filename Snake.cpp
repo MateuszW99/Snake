@@ -10,7 +10,7 @@
 Snake::Snake(QGraphicsScene* gameScene)
     : head{Data::width / 2, Data::height / 2}, scene{ gameScene },
       xDirection{ Data::xVelocity }, yDirection{ 0 },
-      toGrow { 0 }
+      toGrow { 7 }
 {
 
 }
@@ -61,29 +61,12 @@ void Snake::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *
 
 void Snake::move()
 {
-    //QPointF lastHeadPosition{ head }; // Store the head position
-    //qDebug() << lastHeadPosition;
     // Move the head forward
     updateHead();
-    // Move the boyd forward
-
-
-   if(toGrow > 0)
-   {
-       QPointF newNode;
-       tail.push_back(newNode);
-       toGrow--;
-   }
-   else
-   {
-       if(!tail.isEmpty())
-       {
-           tail.removeFirst();
-           tail.push_back(head);
-       }
-   }
-
-   setPos(head);
+    // Move the body nodes forward
+    updateTail();
+    // Move snake's shape forward
+    setPos(head);
 }
 
 void Snake::eatFruit()
@@ -93,7 +76,8 @@ void Snake::eatFruit()
 
 bool Snake::wallHit()
 {
-    if(x() > Data::width || x() < -Data::width || y() > Data::height || y() < -Data::height)
+    qDebug() << head;
+    if(head.x() >= Data::width || head.x() <= 0 || head.y() >= Data::height || head.y() <= 0)
     {
         qDebug() << "Wall hit";
         return true;
@@ -113,8 +97,11 @@ void Snake::checkCollision()
             Controller::fruitsNumber--;
         }
     }
+    if(tail.contains(head))
+    {
+        //qDebug() << "head";
+    }
 
-    // todo: self eating
 }
 
 void Snake::moveLeft()
@@ -151,8 +138,21 @@ void Snake::updateHead()
     head.setY(head.y() + yDirection);
 }
 
-void Snake::updateTailNode(QPointF& node)
+void Snake::updateTail()
 {
-    node.setX(node.x() + xDirection);
-    node.setY(node.y() + yDirection);
+    if(toGrow > 0)
+    {
+        QPointF tailNode = QPointF{x() + xDirection, y() + yDirection};
+        tail.push_back(tailNode);
+        toGrow--;
+    }
+    else
+    {
+        if(!tail.isEmpty())
+        {
+            tail.removeFirst();
+            tail.push_back(QPointF{x() + xDirection, y() + yDirection});
+        }
+    }
+
 }

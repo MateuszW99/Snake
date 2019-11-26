@@ -41,7 +41,7 @@ private:
     int toGrow;
 
     void updateHead();
-    void updateTailNode(QPointF&);
+    void updateTail();
 
 };
 
