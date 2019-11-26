@@ -8,11 +8,11 @@
 #include <typeinfo>
 
 Snake::Snake(QGraphicsScene* gameScene)
-    : head{Data::width / 2, Data::height / 2}, scene{ gameScene },
-      xDirection{ Data::xVelocity }, yDirection{ 0 },
-      toGrow { 20 }
+    : head{ Data::width / 2, Data::height / 2 }, scene{ gameScene },
+      xDirection{ Data::velocity }, yDirection{ 0 },
+      toGrow { 5 }
 {
-
+    direction = Data::Direction::Right;
 }
 
 
@@ -62,6 +62,7 @@ void Snake::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *
 
 void Snake::move()
 {
+
     // Move the head forward
     updateHead();
     // Move the body nodes forward
@@ -70,16 +71,21 @@ void Snake::move()
     setPos(head);
 }
 
-void Snake::eatFruit()
+void Snake::eatFruit(QGraphicsItem* item)
 {
     toGrow++;
+    scene->removeItem(item);
+    Controller::fruitsNumber--;
+    if(tail.count() % 4 == 0 && Data::velocity <= Data::maxSpeed)
+    {
+        Data::velocity++;
+    }
 }
 
 bool Snake::wallHit()
 {
     if(head.x() >= Data::width || head.x() <= 0 || head.y() >= Data::height || head.y() <= 0)
     {
-        qDebug() << "Wall hit";
         return true;
     }
     return false;
@@ -90,40 +96,42 @@ void Snake::checkCollision()
     QList<QGraphicsItem*> collision = collidingItems();
     for(auto item : collision)
     {
-        if(Fruit* fruit = dynamic_cast<Fruit*>(item))
+        if(Fruit* fruit = dynamic_cast<Fruit*>(item)) // If snake's colliding with a fruit, let snake eat it
         {
-            eatFruit();
-            scene->removeItem(item);
-            Controller::fruitsNumber--;
+            eatFruit(item);
         }
     }
 }
 
 void Snake::moveLeft()
 {
-    xDirection = -Data::xVelocity;
+    xDirection = -Data::velocity;
     yDirection = 0;
+    direction = Data::Direction::Left;
     updateHead();
 }
 
 void Snake::moveRight()
 {
-    xDirection = Data::xVelocity;
+    xDirection = Data::velocity;
     yDirection = 0;
+    direction = Data::Direction::Right;
     updateHead();
 }
 
 void Snake::moveUp()
 {
     xDirection = 0;
-    yDirection = -Data::yVelocity;
+    yDirection = -Data::velocity;
+    direction = Data::Direction::Up;
     updateHead();
 }
 
 void Snake::moveDown()
 {
     xDirection = 0;
-    yDirection = Data::yVelocity;
+    yDirection = Data::velocity;
+    direction = Data::Direction::Down;
     updateHead();
 }
 
@@ -152,5 +160,5 @@ void Snake::updateTail()
         }
     }
 
-    tail.push_back(QPointF{x(), y()});
+    tail.push_back(QPointF{ x(), y() });
 }
