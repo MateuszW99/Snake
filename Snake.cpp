@@ -97,9 +97,6 @@ void Snake::checkCollision()
             Controller::fruitsNumber--;
         }
     }
-
-
-
 }
 
 void Snake::moveLeft()
