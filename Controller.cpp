@@ -17,7 +17,7 @@ Controller::Controller(QGraphicsScene* scene, QObject* parent) : QObject{ parent
 
     snakeTimer = new QTimer;
     connect(snakeTimer, SIGNAL(timeout()), this, SLOT(moveSnake()));
-    snakeTimer->start(Data::SnakeLatencySpeed); 
+    snakeTimer->start(Data::snakeLatencySpeed);
 }
 
 Controller::~Controller()
@@ -93,7 +93,7 @@ void Controller::keyPressEvent(QKeyEvent* keyEvent)
     switch (keyEvent->key()) {
     case Qt::Key_Left:
     {
-        if(snake->getXDirection() <= 0)
+        if(snake->getXDirection() <= 0 && snake->getDirection() != Data::Direction::Left)
         {
             snake->moveLeft();
         }
@@ -101,7 +101,7 @@ void Controller::keyPressEvent(QKeyEvent* keyEvent)
     }
     case Qt::Key_Right:
     {
-        if(snake->getXDirection() >= 0)
+        if(snake->getXDirection() >= 0 && snake->getDirection() != Data::Direction::Right)
         {
             snake->moveRight();
         }
@@ -109,7 +109,7 @@ void Controller::keyPressEvent(QKeyEvent* keyEvent)
     }
     case Qt::Key_Up:
     {
-        if(snake->getYDirection() <= 0)
+        if(snake->getYDirection() <= 0 && snake->getDirection() != Data::Direction::Up)
         {
             snake->moveUp();
         }
@@ -117,7 +117,7 @@ void Controller::keyPressEvent(QKeyEvent* keyEvent)
     }
     case Qt::Key_Down:
     {
-        if(snake->getYDirection() >= 0)
+        if(snake->getYDirection() >= 0 && snake->getDirection() != Data::Direction::Down)
         {
             snake->moveDown();
         }

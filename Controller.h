@@ -15,6 +15,8 @@ public:
 
     static int fruitsNumber; // Holds a value of current number of fruits on the board
 
+
+
 public slots:
     void spawnFruit();
     void moveSnake();
