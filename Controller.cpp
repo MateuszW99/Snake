@@ -3,6 +3,8 @@
 #include "Fruit.h"
 #include <QDebug>
 #include <QFlags>
+#include <QMessageBox>
+#include <QApplication>
 
 int Controller::fruitsNumber = 0;
 
@@ -13,11 +15,11 @@ Controller::Controller(QGraphicsScene* scene, QObject* parent) : QObject{ parent
 
     fruitTimer = new QTimer();
     connect(fruitTimer, SIGNAL(timeout()), this, SLOT(spawnFruit()));
-    fruitTimer->start(Data::FruitSpawnTime);
 
     snakeTimer = new QTimer;
     connect(snakeTimer, SIGNAL(timeout()), this, SLOT(moveSnake()));
-    snakeTimer->start(Data::snakeLatencySpeed);
+
+    startTimers();
 }
 
 Controller::~Controller()
@@ -34,7 +36,21 @@ void Controller::moveSnake()
     snake->setFocus();
 }
 
-void Controller::checkCollisions() const
+void Controller::startTimers() const
+{
+    fruitTimer->start(Data::FruitSpawnTime);
+    snakeTimer->start(Data::snakeLatencySpeed);
+}
+
+void Controller::stopTimers() const
+{
+    fruitTimer->stop();
+    snakeTimer->stop();
+}
+
+
+
+void Controller::checkCollisions()
 {
     if(checkWallCollision()) // hitting a wall means losing the game
     {
@@ -42,8 +58,7 @@ void Controller::checkCollisions() const
     }
     if(checkSnakeCollision())
     {
-        snakeTimer->stop();
-        fruitTimer->stop();
+        stopGame();
     }
     checkItemCollision();
 }
@@ -77,6 +92,36 @@ void Controller::checkItemCollision() const
 bool Controller::checkFruitsNumber() const
 {
     return fruitsNumber >= Data::maxFruitNumber ? true : false;
+}
+
+void Controller::stopGame()
+{
+    stopTimers();
+
+    QMessageBox::StandardButton reply{ QMessageBox::question(nullptr, "You lost", "Do you want try again?",
+                                                             QMessageBox::Yes | QMessageBox::No) };
+    if (reply == QMessageBox::Yes)
+    {
+        restartGame();
+    }
+    if(reply == QMessageBox::No)
+    {
+        quitGame();
+    }
+}
+
+void Controller::restartGame()
+{
+    gameScene->clear();
+    fruitsNumber = 0;
+    snake = new Snake(gameScene);
+    gameScene->addItem(snake);
+    startTimers();
+}
+
+void Controller::quitGame() const
+{
+    QApplication::quit();
 }
 
 bool Controller::eventFilter(QObject *watched, QEvent *event)

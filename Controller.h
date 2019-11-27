@@ -15,8 +15,6 @@ public:
 
     static int fruitsNumber; // Holds a value of current number of fruits on the board
 
-
-
 public slots:
     void spawnFruit();
     void moveSnake();
@@ -27,12 +25,19 @@ private:
     QTimer* snakeTimer = nullptr;
     QTimer* fruitTimer = nullptr;
 
-    void checkCollisions() const;
+    void startTimers() const;
+    void stopTimers() const;
+    void restartGame(); // Spawn a new snake
+    void stopGame(); // When snake eats itself, show message
+    void quitGame() const;
+
+    void checkCollisions(); // Call all the checking functions
     bool checkWallCollision() const;  // Returns true whenever snake hits a wall
     bool checkSnakeCollision() const; // Returns true whenever snake eats itself
     void checkItemCollision() const; // Gather items which snake's colliding with
     bool checkFruitsNumber() const; // Returns true if there are more than Data::maxFruitNumber on the board
 
-    void keyPressEvent(QKeyEvent*);
+
+    void keyPressEvent(QKeyEvent*); // Get input from the player
     bool eventFilter(QObject *watched, QEvent *event) override;
 };
