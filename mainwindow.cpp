@@ -5,7 +5,8 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new MainWindow)
 {
-    board = new Board();
+    parent->setFocusPolicy(Qt::FocusPolicy::TabFocus);
+    board = new Board(parent);
 }
 
 MainWindow::~MainWindow()
