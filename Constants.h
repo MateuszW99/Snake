@@ -17,7 +17,7 @@ namespace Data {
     };
 
     //Fruit
-    constexpr int FruitSpawnTime = 2500;
+    constexpr int FruitSpawnTime = 2250;
     constexpr int maxFruitNumber = 4;
     constexpr int fruitSize = 9;
     constexpr qreal fruitRadius = 3.0;
