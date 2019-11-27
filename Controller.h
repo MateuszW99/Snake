@@ -27,6 +27,7 @@ private:
     QTimer* snakeTimer = nullptr;
     QTimer* fruitTimer = nullptr;
 
+    void checkCollisions() const;
     bool checkWallCollision() const;  // Returns true whenever snake hits a wall
     bool checkSnakeCollision() const; // Returns true whenever snake eats itself
     void checkItemCollision() const; // Gather items which snake's colliding with

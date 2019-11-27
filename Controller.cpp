@@ -29,18 +29,23 @@ Controller::~Controller()
 
 void Controller::moveSnake()
 {
-    if(checkWallCollision() || checkSnakeCollision()) // hitting a wall means losing the game
+    checkCollisions();
+    snake->move();
+    snake->setFocus();
+}
+
+void Controller::checkCollisions() const
+{
+    if(checkWallCollision()) // hitting a wall means losing the game
+    {
+        snake->goThroughWall();
+    }
+    if(checkSnakeCollision())
     {
         snakeTimer->stop();
-        return;
+        fruitTimer->stop();
     }
-
     checkItemCollision();
-
-    snake->move();
-
-    //qDebug() << snake->head->pos();
-    snake->setFocus();
 }
 
 

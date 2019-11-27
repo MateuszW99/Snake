@@ -71,6 +71,37 @@ void Snake::move()
     setPos(head);
 }
 
+void Snake::goThroughWall()
+{
+    switch(direction)
+    {
+    case Data::Direction::Left:
+        {
+           head.setX(Data::width);
+           setPos(head.x(), y());
+           break;
+        }
+    case Data::Direction::Right:
+        {
+           head.setX(0);
+           setPos(head.x(), y());
+           break;
+        }
+    case Data::Direction::Up:
+        {
+           head.setY(Data::height);
+           setPos(x(), head.y());
+           break;
+        }
+    case Data::Direction::Down:
+        {
+           head.setY(0);
+           setPos(x(), head.y());
+           break;
+        }
+    }
+}
+
 void Snake::eatFruit(QGraphicsItem* item)
 {
     toGrow++;

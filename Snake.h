@@ -20,13 +20,12 @@ public:
     bool wallHit(); // Determine if snake hit a wall
     void checkCollision(); // Collect items snake's colliding with
 
+    QPointF getHead() const { return head; }
     int getXDirection() const { return xDirection; }
     int getYDirection() const { return yDirection; }
 
     void move(); // Move snake and its tail
-
-    QPointF getHead() const { return head; }
-
+    void goThroughWall(); //
     void moveLeft(); // Set xDirection to -xDirection and yDirection to 0
     void moveRight(); // Set xDireciton to +xDirection and yDirection to 0
     void moveUp(); // Set yDirection to -yDirection and xDirection to 0
