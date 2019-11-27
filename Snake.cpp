@@ -5,27 +5,51 @@
 #include "Snake.h"
 #include "Fruit.h"
 #include "Controller.h"
+#include <typeinfo>
 
-using namespace Data;
-
-
-Snake::Snake(QGraphicsScene* gameScene) : scene{ gameScene }, xDirection{ xVelocity }, yDirection{ 0 }
+Snake::Snake(QGraphicsScene* gameScene)
+    : head{ Data::width / 2, Data::height / 2 }, scene{ gameScene },
+      xDirection{ Data::velocity }, yDirection{ 0 },
+      toGrow { 5 }
 {
-    //setFocus();
-    setFlag(QGraphicsItem::ItemIsFocusable);
+    direction = Data::Direction::Right;
 }
+
 
 QPainterPath Snake::shape() const
 {
-    QPainterPath p;
-    p.setFillRule(Qt::WindingFill);
-    p.addEllipse(QPointF(0, 0), Data::snakeSize, Data::snakeSize);
-    return p;
+    QPainterPath painterPath;
+    painterPath.setFillRule(Qt::WindingFill);
+    painterPath.addEllipse(QPointF{0, 0}, Data::snakeSize, Data::snakeSize); // Snake's head is set to be an ellipse
+
+    for(auto point : tail) // Shape the tail
+    {
+        QPointF node = mapFromScene(point);
+        painterPath.addEllipse(QPointF(node.x(), node.y()), Data::snakeSize * 0.9, Data::snakeSize * 0.9); // Snake nodes are set to be smaller than the head
+    }
+
+    return painterPath;
 }
 
 QRectF Snake::boundingRect() const
 {
-    return QRectF(QPointF(0 - Data::snakeSize, 0 - Data::snakeSize), QPointF(0 + Data::snakeSize, 0 + Data::snakeSize));
+    qreal minX = head.x();
+    qreal minY = head.y();
+    qreal maxX = head.x();
+    qreal maxY = head.y();
+
+    for(auto point : tail) {
+        maxX = point.x() > maxX ? point.x() : maxX;
+        maxY = point.y() > maxY ? point.y() : maxY;
+        minX = point.x() < minX ? point.x() : minX;
+        minY = point.y() < minY ? point.y() : minY;
+    }
+
+    QPointF topLeft = mapFromScene(QPointF(minX, minY));
+    QPointF bottomRight = mapFromScene(QPointF(maxX, maxY));
+
+    return QRectF(QPointF(topLeft.x() - Data::snakeSize, topLeft.y() - Data::snakeSize),
+                  QPointF(bottomRight.x() - topLeft.x() + Data::snakeSize, bottomRight.y() - topLeft.y() + Data::snakeSize));
 }
 
 void Snake::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)
@@ -36,41 +60,63 @@ void Snake::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *
     painter->restore();
 }
 
-void Snake::keyPressEvent(QKeyEvent* keyEvent)
+void Snake::move()
 {
-    switch (keyEvent->key()) {
-    case Qt::Key_Left:
+
+    // Move the head forward
+    updateHead();
+    // Move the body nodes forward
+    updateTail();
+    // Move snake's shape forward
+    setPos(head);
+}
+
+void Snake::goThroughWall()
+{
+    switch(direction)
     {
-        //qDebug() << "Left";
-        moveLeft();
-        break;
+    case Data::Direction::Left:
+        {
+           head.setX(Data::width);
+           setPos(head.x(), y());
+           break;
+        }
+    case Data::Direction::Right:
+        {
+           head.setX(0);
+           setPos(head.x(), y());
+           break;
+        }
+    case Data::Direction::Up:
+        {
+           head.setY(Data::height);
+           setPos(x(), head.y());
+           break;
+        }
+    case Data::Direction::Down:
+        {
+           head.setY(0);
+           setPos(x(), head.y());
+           break;
+        }
     }
-    case Qt::Key_Right:
+}
+
+void Snake::eatFruit(QGraphicsItem* item)
+{
+    toGrow++;
+    scene->removeItem(item);
+    Controller::fruitsNumber--;
+    if(tail.count() % 4 == 0 && Data::velocity <= Data::maxSpeed)
     {
-        //qDebug() << "Right";
-        moveRight();
-        break;
-    }
-    case Qt::Key_Up:
-    {
-        //qDebug() << "Up";
-        moveUp();
-        break;
-    }
-     case Qt::Key_Down:
-    {
-        //qDebug() << "Down";
-        moveDown();
-        break;
-    }
+        Data::velocity++;
     }
 }
 
 bool Snake::wallHit()
 {
-    if(x() > Data::width|| x() < -Data::width|| y() > Data::height || y() < -Data::height)
+    if(head.x() >= Data::width || head.x() <= 0 || head.y() >= Data::height || head.y() <= 0)
     {
-        qDebug() << "Wall hit";
         return true;
     }
     return false;
@@ -81,32 +127,69 @@ void Snake::checkCollision()
     QList<QGraphicsItem*> collision = collidingItems();
     for(auto item : collision)
     {
-        scene->removeItem(item);
-        Controller::fruitsNumber--;
-        //snake->eat()
+        if(Fruit* fruit = dynamic_cast<Fruit*>(item)) // If snake's colliding with a fruit, let snake eat it
+        {
+            eatFruit(item);
+        }
     }
 }
 
 void Snake::moveLeft()
 {
-    xDirection = -1 * xVelocity;
+    xDirection = -Data::velocity;
     yDirection = 0;
+    direction = Data::Direction::Left;
+    updateHead();
 }
 
 void Snake::moveRight()
 {
-    xDirection = xVelocity;
+    xDirection = Data::velocity;
     yDirection = 0;
+    direction = Data::Direction::Right;
+    updateHead();
 }
 
 void Snake::moveUp()
 {
     xDirection = 0;
-    yDirection = -1 * yVelocity;
+    yDirection = -Data::velocity;
+    direction = Data::Direction::Up;
+    updateHead();
 }
 
 void Snake::moveDown()
 {
     xDirection = 0;
-    yDirection = yVelocity;
+    yDirection = Data::velocity;
+    direction = Data::Direction::Down;
+    updateHead();
+}
+
+bool Snake::intersects() const
+{
+    return tail.contains(head) ? true : false;
+}
+
+void Snake::updateHead()
+{
+    head.setX(head.x() + xDirection);
+    head.setY(head.y() + yDirection);
+}
+
+void Snake::updateTail()
+{
+    if(toGrow > 0)
+    {
+        toGrow--;
+    }
+    else
+    {
+        if(!tail.isEmpty())
+        {
+            tail.removeFirst();
+        }
+    }
+
+    tail.push_back(QPointF{ x(), y() });
 }

@@ -2,22 +2,24 @@
 #include "Constants.h"
 #include "Fruit.h"
 #include <QDebug>
+#include <QFlags>
+#include <QMessageBox>
+#include <QApplication>
 
 int Controller::fruitsNumber = 0;
 
-Controller::Controller(QGraphicsScene* scene) : gameScene { scene }, snake { new Snake(scene) }
+Controller::Controller(QGraphicsScene* scene, QObject* parent) : QObject{ parent }, gameScene { scene }, snake { new Snake(scene) }
 {
     scene->addItem(snake);
-    snake->setFocus();
-    snake->setPos(Data::width / 2, Data::height / 2);
+    scene->installEventFilter(this);
 
     fruitTimer = new QTimer();
     connect(fruitTimer, SIGNAL(timeout()), this, SLOT(spawnFruit()));
-    fruitTimer->start(Data::FruitSpawnTime);
 
     snakeTimer = new QTimer;
     connect(snakeTimer, SIGNAL(timeout()), this, SLOT(moveSnake()));
-    snakeTimer->start(Data::SnakeLatencySpeed);
+
+    startTimers();
 }
 
 Controller::~Controller()
@@ -29,18 +31,38 @@ Controller::~Controller()
 
 void Controller::moveSnake()
 {
-    if(checkWallCollision()) // hitting a wall means losing the game
-    {
-        snakeTimer->stop();
-        return;
-    }
-
-    checkItemCollision();
-
-    snake->setPos(snake->x() + snake->getXDirection(), snake->y() + snake->getYDirection());
-    //qDebug() << snake->pos();
+    checkCollisions();
+    snake->move();
     snake->setFocus();
 }
+
+void Controller::startTimers() const
+{
+    fruitTimer->start(Data::FruitSpawnTime);
+    snakeTimer->start(Data::snakeLatencySpeed);
+}
+
+void Controller::stopTimers() const
+{
+    fruitTimer->stop();
+    snakeTimer->stop();
+}
+
+
+
+void Controller::checkCollisions()
+{
+    if(checkWallCollision()) // hitting a wall means losing the game
+    {
+        snake->goThroughWall();
+    }
+    if(checkSnakeCollision())
+    {
+        stopGame();
+    }
+    checkItemCollision();
+}
+
 
 void Controller::spawnFruit()
 {
@@ -54,11 +76,12 @@ void Controller::spawnFruit()
 
 bool Controller::checkWallCollision() const
 {
-    if(snake->wallHit())
-    {
-        return true;
-    }
-    return false;
+    return snake->wallHit() ? true : false;
+}
+
+bool Controller::checkSnakeCollision() const
+{
+    return snake->intersects() ? true : false;
 }
 
 void Controller::checkItemCollision() const
@@ -68,12 +91,88 @@ void Controller::checkItemCollision() const
 
 bool Controller::checkFruitsNumber() const
 {
-    if(fruitsNumber >= Data::maxFruitNumber)
+    return fruitsNumber >= Data::maxFruitNumber ? true : false;
+}
+
+void Controller::stopGame()
+{
+    stopTimers();
+
+    QMessageBox::StandardButton reply{ QMessageBox::question(nullptr, "You lost", "Do you want try again?",
+                                                             QMessageBox::Yes | QMessageBox::No) };
+    if (reply == QMessageBox::Yes)
     {
-        return true;
+        restartGame();
     }
-    return false;
+    if(reply == QMessageBox::No)
+    {
+        quitGame();
+    }
+}
+
+void Controller::restartGame()
+{
+    gameScene->clear();
+    fruitsNumber = 0;
+    snake = new Snake(gameScene);
+    gameScene->addItem(snake);
+    startTimers();
+}
+
+void Controller::quitGame() const
+{
+    QApplication::quit();
+}
+
+bool Controller::eventFilter(QObject *watched, QEvent *event)
+{
+    if (event->type() == QEvent::KeyPress)
+    {
+            keyPressEvent(dynamic_cast<QKeyEvent*>(event));
+            return true;
+    }
+    else
+    {
+        return QObject::eventFilter(watched, event);
+    }
 }
 
 
+void Controller::keyPressEvent(QKeyEvent* keyEvent)
+{
+    switch (keyEvent->key()) {
+    case Qt::Key_Left:
+    {
+        if(snake->getXDirection() <= 0 && snake->getDirection() != Data::Direction::Left)
+        {
+            snake->moveLeft();
+        }
+        break;
+    }
+    case Qt::Key_Right:
+    {
+        if(snake->getXDirection() >= 0 && snake->getDirection() != Data::Direction::Right)
+        {
+            snake->moveRight();
+        }
+        break;
+    }
+    case Qt::Key_Up:
+    {
+        if(snake->getYDirection() <= 0 && snake->getDirection() != Data::Direction::Up)
+        {
+            snake->moveUp();
+        }
+        break;
+    }
+    case Qt::Key_Down:
+    {
+        if(snake->getYDirection() >= 0 && snake->getDirection() != Data::Direction::Down)
+        {
+            snake->moveDown();
+        }
+        break;
+    }
+    }
+}
 

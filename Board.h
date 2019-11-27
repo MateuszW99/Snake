@@ -8,7 +8,7 @@ class Board : public QGraphicsView
 {
     Q_OBJECT
 public:
-    Board();
+    Board(QObject* = nullptr);
     ~Board()
     {
         delete scene;
