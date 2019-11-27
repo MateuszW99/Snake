@@ -13,9 +13,6 @@ Board::Board(QObject* parent)
     setFixedSize(Data::width, Data::height);
     setSceneRect(0, 0, Data::width, Data::height);
     controller = new Controller{scene, parent};
-
-    QPixmap background{ "C:\\Users\\elekr\\OneDrive\\Studia\\obiektowe\\Snake\\download.jpg" };
-    scene->setBackgroundBrush(background.scaled(width(), height(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
 }
 
 
