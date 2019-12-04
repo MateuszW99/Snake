@@ -2,5 +2,3 @@
 *.pro
 *.pro.*
 *.ui
-mainwindow.cpp
-mainwindow.h
