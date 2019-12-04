@@ -2,6 +2,7 @@
 #include <QGraphicsView>
 #include <QWidget>
 #include <QMainWindow>
+#include "Menu.h"
 #include "Controller.h"
 
 class Board : public QGraphicsView
@@ -9,12 +10,10 @@ class Board : public QGraphicsView
     Q_OBJECT
 public:
     Board(QObject* = nullptr);
-    ~Board()
-    {
-        delete scene;
-    }
+    ~Board();
 
 private:
     QGraphicsScene* scene = nullptr;
+    Menu* menu = nullptr;
     Controller* controller = nullptr;
 };

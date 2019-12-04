@@ -1,6 +1,7 @@
 #pragma once
 #include <QObject>
 #include <QWidget>
+#include <QLabel>
 #include "ui_Menu.h"
 
 
