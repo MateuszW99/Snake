@@ -1,16 +1,14 @@
-#include "mainwindow.h"
-#include "ui_mainwindow.h"
+#include "Menu.h"
 
-MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent)
-    , ui(new MainWindow)
+Menu::Menu(QWidget *parent)
 {
-    parent->setFocusPolicy(Qt::FocusPolicy::TabFocus);
-    board = new Board(parent);
+    //parent->setFocusPolicy(Qt::FocusPolicy::TabFocus);
+    ui.setupUi(this);
+
 }
 
-MainWindow::~MainWindow()
+Menu::~Menu()
 {
-    delete ui;
+    //delete menu;
 }
 

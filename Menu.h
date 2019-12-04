@@ -1,15 +1,18 @@
 #pragma once
-#include "Board.h"
+#include <QObject>
+#include <QWidget>
+#include "ui_Menu.h"
 
-class MainWindow : public QMainWindow
+
+
+class Menu : public QWidget
 {
     Q_OBJECT
 
 public:
-    MainWindow(QWidget *parent = nullptr);
-    ~MainWindow();
+    Menu(QWidget *parent = nullptr);
+    ~Menu();
 
 private:
-    Board* board;
-    MainWindow *ui;
+    Ui::Menu ui;
 };
