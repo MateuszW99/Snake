@@ -38,6 +38,7 @@ private:
     QVector<QPointF> tail; // Store all the exisiting points of snake's tail
     QGraphicsScene* scene = nullptr;
     Data::Direction direction;
+    int velocity;
     int xDirection;
     int yDirection;
     int snakeLength;

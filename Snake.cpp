@@ -9,7 +9,7 @@
 
 Snake::Snake(QGraphicsScene* gameScene)
     : head{ Data::width / 2, Data::height / 2 }, scene{ gameScene },
-      xDirection{ Data::velocity }, yDirection{ 0 },
+      velocity {Data::velocity}, xDirection{ Data::velocity }, yDirection{ 0 },
       toGrow { 5 }
 {
     direction = Data::Direction::Right;
@@ -107,9 +107,9 @@ void Snake::eatFruit(QGraphicsItem* item)
     toGrow++;
     scene->removeItem(item);
     Controller::fruitsNumber--;
-    if(tail.count() % 4 == 0 && Data::velocity <= Data::maxSpeed)
+    if(tail.count() % 4 == 0 && velocity <= Data::maxSpeed)
     {
-        Data::velocity++;
+        velocity++;
     }
 }
 
@@ -136,7 +136,7 @@ void Snake::checkCollision()
 
 void Snake::moveLeft()
 {
-    xDirection = -Data::velocity;
+    xDirection = -velocity;
     yDirection = 0;
     direction = Data::Direction::Left;
     updateHead();
@@ -144,7 +144,7 @@ void Snake::moveLeft()
 
 void Snake::moveRight()
 {
-    xDirection = Data::velocity;
+    xDirection = velocity;
     yDirection = 0;
     direction = Data::Direction::Right;
     updateHead();
@@ -153,7 +153,7 @@ void Snake::moveRight()
 void Snake::moveUp()
 {
     xDirection = 0;
-    yDirection = -Data::velocity;
+    yDirection = -velocity;
     direction = Data::Direction::Up;
     updateHead();
 }
@@ -161,7 +161,7 @@ void Snake::moveUp()
 void Snake::moveDown()
 {
     xDirection = 0;
-    yDirection = Data::velocity;
+    yDirection = velocity;
     direction = Data::Direction::Down;
     updateHead();
 }
