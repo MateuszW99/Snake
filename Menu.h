@@ -3,8 +3,7 @@
 #include <QWidget>
 #include <QLabel>
 #include "ui_Menu.h"
-
-
+#include <QPushButton>
 
 class Menu : public QWidget
 {
@@ -13,6 +12,12 @@ class Menu : public QWidget
 public:
     Menu(QWidget *parent = nullptr);
     ~Menu();
+
+signals:
+    void startGameButtonClicked();
+
+private slots:
+    void on_startGameButton_clicked();
 
 private:
     Ui::Menu ui;

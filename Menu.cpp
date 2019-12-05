@@ -1,10 +1,9 @@
 #include "Menu.h"
+#include <QDebug>
 
 Menu::Menu(QWidget *parent)
 {
-    //parent->setFocusPolicy(Qt::FocusPolicy::TabFocus);
     ui.setupUi(this);
-
 }
 
 Menu::~Menu()
@@ -12,3 +11,11 @@ Menu::~Menu()
     //delete menu;
 }
 
+//Menu::
+
+
+
+void Menu::on_startGameButton_clicked()
+{
+    emit startGameButtonClicked();
+}

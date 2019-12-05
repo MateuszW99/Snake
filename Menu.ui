@@ -22,7 +22,7 @@
      <height>195</height>
     </rect>
    </property>
-   <widget class="QPushButton" name="pushButton">
+   <widget class="QPushButton" name="speedButton">
     <property name="geometry">
      <rect>
       <x>160</x>
@@ -35,7 +35,7 @@
      <string>Set Speed</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_2">
+   <widget class="QPushButton" name="startGameButton">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -48,7 +48,7 @@
      <string>Start Game</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_3">
+   <widget class="QPushButton" name="quitGameButton">
     <property name="geometry">
      <rect>
       <x>161</x>
@@ -61,7 +61,7 @@
      <string>Quit</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_4">
+   <widget class="QPushButton" name="timerButton">
     <property name="geometry">
      <rect>
       <x>160</x>
