@@ -12,6 +12,7 @@ public:
 
 public slots:
     void startGame();
+    void quitGame();
 
 private:
     Board* board = nullptr;
