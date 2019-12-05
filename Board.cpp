@@ -4,7 +4,7 @@
 
 Board::Board(QObject* parent)
 {
-    /*scene = new QGraphicsScene();
+    scene = new QGraphicsScene();
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setScene(scene);
@@ -14,19 +14,15 @@ Board::Board(QObject* parent)
     controller = new Controller{scene, parent};
 
     QPixmap background{ "C:\\Users\\elekr\\OneDrive\\Studia\\obiektowe\\Snake\\download.jpg" };
-    scene->setBackgroundBrush(background.scaled(width(), height(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation));*/
+    scene->setBackgroundBrush(background.scaled(width(), height(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
 
-
-    //menu = new Menu();
-//this->hide();
-   // menu->show();
+    show();
 }
 
 Board::~Board()
 {
     delete controller;
     delete scene;
-    delete menu;
 }
 
 

@@ -2,7 +2,6 @@
 #include <QGraphicsView>
 #include <QWidget>
 #include <QMainWindow>
-#include "Menu.h"
 #include "Controller.h"
 
 class Board : public QGraphicsView
@@ -14,6 +13,5 @@ public:
 
 private:
     QGraphicsScene* scene = nullptr;
-    Menu* menu = nullptr;
     Controller* controller = nullptr;
 };
