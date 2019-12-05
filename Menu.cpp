@@ -17,5 +17,10 @@ Menu::~Menu()
 
 void Menu::on_startGameButton_clicked()
 {
-    emit startGameButtonClicked();
+    emit startGame();
 }
+
+void Menu::on_quitGameButton_clicked()
+{
+    emit quitGame();
+;}
