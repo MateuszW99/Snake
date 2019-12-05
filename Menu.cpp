@@ -1,5 +1,6 @@
 #include "Menu.h"
 #include <QDebug>
+#include "Constants.h"
 
 Menu::Menu(QWidget *parent)
 {
@@ -17,6 +18,14 @@ Menu::~Menu()
 
 void Menu::on_startGameButton_clicked()
 {
+    if(getTime() <= 0)
+    {
+        setTime(Data::defaultGameTime);
+    }
+    if(getLength() <= 0)
+    {
+        setLength(Data::defaultSnakeLength);
+    }
     emit startGame();
 }
 

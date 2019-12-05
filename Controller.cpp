@@ -8,7 +8,9 @@
 
 int Controller::fruitsNumber = 0;
 
-Controller::Controller(QGraphicsScene* scene, QObject* parent) : QObject{ parent }, gameScene { scene }, snake { new Snake(scene) }
+Controller::Controller(QGraphicsScene* scene, QObject* parent, int time, int length)
+          : QObject{ parent }, gameScene { scene }, snake { new Snake(scene, length) },
+            gameTime{ time * 6000}, snakeLength{ length }
 {
     scene->addItem(snake);
     scene->installEventFilter(this);
@@ -16,21 +18,30 @@ Controller::Controller(QGraphicsScene* scene, QObject* parent) : QObject{ parent
     fruitTimer = new QTimer();
     connect(fruitTimer, SIGNAL(timeout()), this, SLOT(spawnFruit()));
 
-    snakeTimer = new QTimer;
+    snakeTimer = new QTimer();
     connect(snakeTimer, SIGNAL(timeout()), this, SLOT(moveSnake()));
+
+    gameTimer = new QElapsedTimer();
+    qDebug() << gameTime;
 
     startTimers();
 }
 
 Controller::~Controller()
 {
-    delete snakeTimer;
     delete snake;
+    delete snakeTimer;
+    delete gameTimer;
     delete fruitTimer;
 }
 
 void Controller::moveSnake()
 {
+    if(gameTimer->elapsed() >= gameTime)
+    {
+        qDebug() << "xd";
+        stopGame();
+    }
     checkCollisions();
     snake->move();
     snake->setFocus();
@@ -38,6 +49,7 @@ void Controller::moveSnake()
 
 void Controller::startTimers() const
 {
+    gameTimer->start();
     fruitTimer->start(Data::FruitSpawnTime);
     snakeTimer->start(Data::snakeLatencySpeed);
 }
@@ -114,7 +126,7 @@ void Controller::restartGame()
 {
     gameScene->clear();
     fruitsNumber = 0;
-    snake = new Snake(gameScene);
+    snake = new Snake(gameScene, snakeLength);
     gameScene->addItem(snake);
     startTimers();
 }

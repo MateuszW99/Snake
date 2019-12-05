@@ -16,19 +16,6 @@
   <layout class="QHBoxLayout" name="horizontalLayout">
    <item>
     <widget class="QWidget" name="centralwidget" native="true">
-     <widget class="QPushButton" name="speedButton">
-      <property name="geometry">
-       <rect>
-        <x>160</x>
-        <y>50</y>
-        <width>121</width>
-        <height>25</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Set Length</string>
-      </property>
-     </widget>
      <widget class="QPushButton" name="startGameButton">
       <property name="geometry">
        <rect>
@@ -55,37 +42,33 @@
        <string>Quit</string>
       </property>
      </widget>
-     <widget class="QPushButton" name="timerButton">
-      <property name="geometry">
-       <rect>
-        <x>160</x>
-        <y>100</y>
-        <width>121</width>
-        <height>25</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Set Game Time</string>
-      </property>
-     </widget>
      <widget class="QLabel" name="label">
       <property name="geometry">
        <rect>
         <x>10</x>
         <y>10</y>
-        <width>101</width>
+        <width>271</width>
         <height>21</height>
        </rect>
       </property>
       <property name="text">
-       <string>Set initial values</string>
+       <string>Welcome to the snake game!</string>
+      </property>
+      <property name="scaledContents">
+       <bool>true</bool>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+      <property name="wordWrap">
+       <bool>false</bool>
       </property>
      </widget>
      <widget class="QLineEdit" name="lengthLine">
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>50</y>
+        <y>60</y>
         <width>121</width>
         <height>21</height>
        </rect>
@@ -111,6 +94,32 @@
       </property>
       <property name="inputMask">
        <string/>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_2">
+      <property name="geometry">
+       <rect>
+        <x>160</x>
+        <y>60</y>
+        <width>101</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Set snake length</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_3">
+      <property name="geometry">
+       <rect>
+        <x>160</x>
+        <y>100</y>
+        <width>101</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Set time</string>
       </property>
      </widget>
     </widget>

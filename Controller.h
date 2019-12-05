@@ -3,6 +3,7 @@
 #include <QTimer>
 #include <QGraphicsScene>
 #include <QKeyEvent>
+#include <QElapsedTimer>
 #include "Snake.h"
 #include "Fruit.h"
 
@@ -10,7 +11,7 @@ class Controller : public QObject
 {
     Q_OBJECT
 public:
-    Controller(QGraphicsScene*, QObject* parent);
+    Controller(QGraphicsScene*, QObject* parent, int, int);
     ~Controller() override;
 
     static int fruitsNumber; // Holds a value of current number of fruits on the board
@@ -21,7 +22,10 @@ public slots:
 
 private:
     QGraphicsScene* gameScene = nullptr;
+    int gameTime;
+    int snakeLength;
     Snake* snake = nullptr;
+    QElapsedTimer* gameTimer = nullptr;
     QTimer* snakeTimer = nullptr;
     QTimer* fruitTimer = nullptr;
 

@@ -19,7 +19,7 @@ void Game::startGame()
 {
     qDebug() << menu->getTime();
     menu->close();
-    board = new Board();
+    board = new Board(menu->getTime(), menu->getLength());
 }
 
 void Game::quitGame()

@@ -7,10 +7,10 @@
 #include "Controller.h"
 #include <typeinfo>
 
-Snake::Snake(QGraphicsScene* gameScene)
+Snake::Snake(QGraphicsScene* gameScene, int snakeLength)
     : head{ Data::width / 2, Data::height / 2 }, scene{ gameScene },
       velocity {Data::velocity}, xDirection{ Data::velocity }, yDirection{ 0 },
-      toGrow { 5 }
+      toGrow { snakeLength }
 {
     direction = Data::Direction::Right;
 }

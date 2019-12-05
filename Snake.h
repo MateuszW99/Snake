@@ -8,7 +8,7 @@
 class Snake : public QGraphicsItem
 {
 public:
-    Snake(QGraphicsScene*);
+    Snake(QGraphicsScene*, int);
     ~Snake() {}
 
     QPainterPath shape() const; // Set the shape of snake to circle

@@ -3,9 +3,11 @@
 
 namespace Data {
     // Window
+    constexpr int defaultGameTime = 6;
     constexpr int width = 800;
     constexpr int height = 600;
     // Snake
+    constexpr int defaultSnakeLength = 5;
     constexpr int snakeSize = 10;
     constexpr qreal snakeRadius = 3.0;
     static int velocity = 4;

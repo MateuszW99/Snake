@@ -8,7 +8,7 @@ class Board : public QGraphicsView
 {
     Q_OBJECT
 public:
-    Board(QObject* = nullptr);
+    Board(int, int);
     ~Board();
 
 private:

@@ -13,7 +13,10 @@ public:
     Menu(QWidget *parent = nullptr);
     ~Menu();
 
+    void setLength(int value) { ui.lengthLine->text() = QString::number(value); }
     int getLength() const { return ui.lengthLine->text().toInt(); }
+
+    void setTime(int value) { ui.timerLine->text() = QString::number(value); }
     int getTime() const { return ui.timerLine->text().toInt(); }
 
 signals:
@@ -22,7 +25,6 @@ signals:
 
 private slots:
     void on_startGameButton_clicked();
-
     void on_quitGameButton_clicked();
 
 private:
