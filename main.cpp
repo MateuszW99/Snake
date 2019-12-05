@@ -1,15 +1,15 @@
-//#include "mainwindow.h"
-#include "Board.h"
 #include <QApplication>
-#include <QLabel>
-#include <QDebug>
 #include <random>
+#include "Game.h"
 
 int main(int argc, char *argv[])
 {
     qsrand(time(NULL));
+
     QApplication app(argc, argv);
-    Board* window = new Board();
-    window->show();
+
+
+    Game* window = new Game();
+
     return app.exec();
 }

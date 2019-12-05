@@ -15,11 +15,11 @@ Board::Board(QObject* parent)
 
     QPixmap background{ "C:\\Users\\elekr\\OneDrive\\Studia\\obiektowe\\Snake\\download.jpg" };
     scene->setBackgroundBrush(background.scaled(width(), height(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation));*/
-    this->hide();
 
-    menu = new Menu();
 
-    menu->show();
+    //menu = new Menu();
+//this->hide();
+   // menu->show();
 }
 
 Board::~Board()
