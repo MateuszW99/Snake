@@ -15,6 +15,7 @@ public:
     ~Controller() override;
 
     static int fruitsNumber; // Holds a value of current number of fruits on the board
+    static int score;
 
 public slots:
     void spawnFruit();
@@ -29,6 +30,7 @@ private:
     QTimer* snakeTimer = nullptr;
     QTimer* fruitTimer = nullptr;
 
+
     void startTimers() const;
     void stopTimers() const;
     void restartGame(); // Spawn a new snake
@@ -41,6 +43,7 @@ private:
     void checkItemCollision() const; // Gather items which snake's colliding with
     bool checkFruitsNumber() const; // Returns true if there are more than Data::maxFruitNumber on the board
 
+    QString gameEndMessage() const;
 
     void keyPressEvent(QKeyEvent*); // Get input from the player
     bool eventFilter(QObject *watched, QEvent *event) override;

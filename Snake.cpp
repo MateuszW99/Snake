@@ -107,6 +107,7 @@ void Snake::eatFruit(QGraphicsItem* item)
     toGrow++;
     scene->removeItem(item);
     Controller::fruitsNumber--;
+    Controller::score++;
     if(tail.count() % 4 == 0 && velocity <= Data::maxSpeed)
     {
         velocity++;

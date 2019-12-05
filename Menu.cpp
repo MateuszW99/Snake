@@ -12,20 +12,27 @@ Menu::~Menu()
     //delete menu;
 }
 
-//Menu::
+int Menu::getTime()
+{
+    if(ui.timerLine->text().isEmpty() || getTime() <= 0)
+    {
+        setTime(Data::defaultGameTime);
+    }
+    return time;
+}
 
+int Menu::getLength()
+{
+    if(ui.lengthLine->text().isEmpty() || getLength() <= 0)
+    {
+        setLength(Data::defaultSnakeLength);
+    }
+    return snakeLength;
+}
 
 
 void Menu::on_startGameButton_clicked()
 {
-    if(getTime() <= 0)
-    {
-        setTime(Data::defaultGameTime);
-    }
-    if(getLength() <= 0)
-    {
-        setLength(Data::defaultSnakeLength);
-    }
     emit startGame();
 }
 
