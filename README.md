@@ -159,6 +159,7 @@ Method signature | Description
 `QRectF boundingRect() const` | Sets `Fruit`'s boundary to a rectangle
 `void paint(QPainter*, const QStyleOptionGraphicsItem*, QWidget*)` | Paints the shape
 
-
+## Contants.h
+##### Contains all the game's constans used in the code.
  
  
