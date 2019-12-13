@@ -17,7 +17,7 @@ public:
 
 
     bool intersects() const; // Return true if snake eats itself
-    bool wallHit(); // Determine if snake hit a wall
+    bool wallHit() const; // Determine if snake hit a wall
     void checkCollision(); // Collect items snake's colliding with
 
     QPointF getHead() const { return head; }
@@ -48,7 +48,5 @@ private:
 
     void updateHead();
     void updateTail();
-
-    QPainterPath painter;
 };
 

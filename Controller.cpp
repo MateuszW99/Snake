@@ -1,7 +1,6 @@
-#include <QFlags>
+#include "Controller.h"
 #include <QMessageBox>
 #include <QApplication>
-#include "Controller.h"
 #include "Constants.h"
 #include "Fruit.h"
 
@@ -122,9 +121,9 @@ void Controller::stopGame()
 
 void Controller::restartGame()
 {
-    gameScene->clear();
     fruitsNumber = 0;
     score = 0;
+    gameScene->clear();
     snake = new Snake(gameScene, snakeLength);
     gameScene->addItem(snake);
     startTimers();
@@ -139,7 +138,7 @@ QString Controller::gameEndMessage() const
 {
     QString message;
     message.append("Score: ");
-    message.append(QString::number(score));
+    message.append(QString::number(score * 10));
     message.append("\nPlay again?");
     return message;
 }
@@ -149,8 +148,8 @@ bool Controller::eventFilter(QObject *watched, QEvent *event)
 {
     if (event->type() == QEvent::KeyPress)
     {
-            keyPressEvent(dynamic_cast<QKeyEvent*>(event));
-            return true;
+        keyPressEvent(dynamic_cast<QKeyEvent*>(event));
+        return true;
     }
     else
     {

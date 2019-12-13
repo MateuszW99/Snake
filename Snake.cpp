@@ -5,7 +5,7 @@
 #include "Snake.h"
 #include "Fruit.h"
 #include "Controller.h"
-#include <typeinfo>
+
 
 Snake::Snake(QGraphicsScene* gameScene, int snakeLength)
     : head{ Data::width / 2, Data::height / 2 }, scene{ gameScene },
@@ -62,7 +62,6 @@ void Snake::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *
 
 void Snake::move()
 {
-
     // Move the head forward
     updateHead();
     // Move the body nodes forward
@@ -114,7 +113,7 @@ void Snake::eatFruit(QGraphicsItem* item)
     }
 }
 
-bool Snake::wallHit()
+bool Snake::wallHit() const
 {
     if(head.x() >= Data::width || head.x() <= 0 || head.y() >= Data::height || head.y() <= 0)
     {

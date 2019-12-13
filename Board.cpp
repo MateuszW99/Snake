@@ -1,6 +1,4 @@
 #include "Board.h"
-#include <QtDebug>
-#include <QMessageBox>
 
 Board::Board(int gameTime, int snakeLength)
 {

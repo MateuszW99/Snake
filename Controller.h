@@ -14,7 +14,7 @@ public:
     Controller(QGraphicsScene*, QObject* parent, int, int);
     ~Controller() override;
 
-    static int fruitsNumber; // Holds a value of current number of fruits on the board
+    static int fruitsNumber; // Holds the value of current number of fruits on the board
     static int score;
 
 public slots:
@@ -23,13 +23,12 @@ public slots:
 
 private:
     QGraphicsScene* gameScene = nullptr;
-    int gameTime;
-    int snakeLength;
     Snake* snake = nullptr;
     QElapsedTimer* gameTimer = nullptr;
     QTimer* snakeTimer = nullptr;
     QTimer* fruitTimer = nullptr;
-
+    int gameTime;
+    int snakeLength;
 
     void startTimers() const;
     void stopTimers() const;

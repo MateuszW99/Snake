@@ -14,10 +14,10 @@ public:
     ~Menu();
 
     void setLength(int value) { snakeLength = value; }
-    int getLength();
+    int getLength() const;
 
     void setTime(int value) { time = value; }
-    int getTime();
+    int getTime() const;
 
 signals:
     void startGame() const;

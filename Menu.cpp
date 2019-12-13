@@ -1,5 +1,4 @@
 #include "Menu.h"
-#include <QDebug>
 #include "Constants.h"
 
 Menu::Menu(QWidget *parent)
@@ -9,34 +8,26 @@ Menu::Menu(QWidget *parent)
 
 Menu::~Menu()
 {
-    //delete menu;
 }
 
-int Menu::getTime()
+int Menu::getTime() const
 {
-    if(ui.timerLine->text().isEmpty() || getTime() <= 0)
-    {
-        setTime(Data::defaultGameTime);
-    }
     return time;
 }
 
-int Menu::getLength()
+int Menu::getLength() const
 {
-    if(ui.lengthLine->text().isEmpty() || getLength() <= 0)
-    {
-        setLength(Data::defaultSnakeLength);
-    }
     return snakeLength;
 }
 
-
 void Menu::on_startGameButton_clicked()
 {
+    snakeLength = ui.lengthLine->text().isEmpty() ? Data::defaultSnakeLength : ui.lengthLine->text().toInt();
+    time = ui.timerLine->text().isEmpty() ? Data::defaultGameTime : ui.timerLine->text().toInt();
     emit startGame();
 }
 
 void Menu::on_quitGameButton_clicked()
 {
     emit quitGame();
-;}
+}
