@@ -2,7 +2,7 @@
 ## Created with C++14 and QT 5.13.2
 
 ### Description 
-Set the starting speed and snake length before playing. 
+Player can set the initial speed and snake length before starting the game. 
 Controll the snake with arrow keys. Enjoy the game.
 
 
